@@ -8,7 +8,6 @@ const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, err => {
     err ? log(err) : log(`http://localhost:${PORT}`);
-
 });
 
 
