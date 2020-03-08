@@ -1,59 +1,73 @@
 const log = console.log;
 var connection = require('./connection.js');
 
+function printQuestionMarks(num) {
+    let arr = [];
+
+    for (let i = 0; i < num; i++) {
+        arr.push('?');
+    }
+
+    return arr.toString();
+}
+
+function objToStr(obj) {
+    let text = "";
+
+    for (x in obj) {
+        text = x + '=' + obj[x];
+    }
+
+    return text;
+}
+
 var orm = {
-    all: query => {
+    all: (tablename, cb) => {
         log(`ALL`);
-
-        let queryString = query;
-        queryString ? null :  queryString = 'SELECT * FROM burgers;';
-
-        connection.query(queryString, (err, result, fields) => {
+        let queryString = `SELECT * FROM ${tablename};`;
+        connection.query(queryString, (err, result) => {
             if (err) throw err;
-            log('results: ', result);
+            log('----------------------------------------------------------------------------');
+            cb('results:: ');
+            cb(result);
+            log('----------------------------------------------------------------------------');
         });
 
-        log(`--------------------------------------`);
+        log(`----------------------------------------------------------------------------`);
     },
 
-    insertOne: query => {
-        log(`INSERT ONE`);
+    create: (tablename, cols, vals, cb) => {
+        log(`CREATE`);
+        // orm.create(`INSERT INTO burgers (burger_name, devoured) VALUES ("Coffee", ${false})`);
 
-        let queryString = query;
+        let queryString = `INSERT INTO ${tablename} (${cols.toString()}) VALUES (${printQuestionMarks(vals.length)})`;
         log(`queryString:: ${queryString}`);
 
-        connection.query(queryString, (err, result, fields) => {
+        connection.query(queryString, vals, (err, result) => {
             if (err) throw err;
-            // log(result);
-            orm.all()
+            cb(result);
         });
 
 
         log(`--------------------------------------`);
     },
 
-    updateOne: query =>  {
+    update: (tablename, objColVals, condition, cb) => {
         log(`UPDATE ONE`);
-        let queryString = query;
+
+        let queryString = `UPDATE ${tablename} SET ${objToStr(objColVals)} WHERE ${condition}`;
         log(`queryString:: ${queryString}`);
-        connection.query(queryString, (err, result, fields) => {
+
+        connection.query(queryString, (err, result) => {
             if (err) throw err;
-
-
-            orm.all();
-        })
-
+            cb(result);
+        });
     }
 }
 
 // TESTING
-// orm.insertOne(`INSERT INTO burgers (burger_name, devoured) VALUES ("Coffee", ${false})`);
-
-// orm.updateOne(`UPDATE burgers SET burger_name = 'Cheese burger' WHERE burger_name='Coffee'`);
-// orm.updateOne(`UPDATE burgers SET devoured = ${true} WHERE burger_name='Cheese burger'`);
-
-
-
-
+// orm.create(`INSERT INTO burgers (burger_name, devoured) VALUES ("Coffee", ${false})`);
+// orm.update(`UPDATE burgers SET burger_name = 'Cheese burger' WHERE burger_name='Coffee'`);
+// orm.update(`UPDATE burgers SET devoured = ${true} WHERE burger_name='Cheese burger'`);
 
 module.exports = orm;
