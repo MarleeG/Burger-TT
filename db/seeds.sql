@@ -5,3 +5,4 @@ INSERT INTO `burgers` VALUES
 ('3','Tyson Unions', FALSE),
 ('4','Adela Cove', TRUE),
 ('5','Renner Mill',TRUE); 
+
