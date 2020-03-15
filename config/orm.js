@@ -2,23 +2,22 @@ const log = console.log;
 var connection = require('./connection.js');
 
 function printQuestionMarks(num) {
-    let arr = [];
+    var arr = [];
 
-    for (let i = 0; i < num; i++) {
+    for (var i = 0; i < num; i++) {
         arr.push('?');
     }
 
     return arr.toString();
 }
 
-function objToStr(obj) {
-    let text = "";
+function objToStr(ob) {
+    var arr = [];
 
-    for (x in obj) {
-        text = x + '=' + obj[x];
+    for (var key in ob) {
+        arr.push(key + "=" + ob[key]);
     }
-
-    return text;
+    return arr.toString();
 }
 
 var orm = {
@@ -28,7 +27,6 @@ var orm = {
         connection.query(queryString, (err, result) => {
             if (err) throw err;
             log('----------------------------------------------------------------------------');
-            cb('results:: ');
             cb(result);
             log('----------------------------------------------------------------------------');
         });
