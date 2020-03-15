@@ -1,11 +1,10 @@
 const log = console.log;
-const orm = require("../config/orm.js");
+var orm = require("../config/orm.js");
 
 
 var burger = {
     all: (cb) => {
         log(`BURGER.JS:: ALL`);
-
         orm.all('burgers', res => {
             cb(res);
         });
@@ -20,10 +19,9 @@ var burger = {
         let condition = `id=${id}`;
         orm.update(
             'burgers',
-            { devoured: true }, 
-            condition, 
+            { devoured: true },
+            condition,
             cb);
-
     }
 }
 

@@ -1,8 +1,8 @@
 {
   "name": "Burger-TT",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "-Node \r -Express \r -MySQL \r -Handlebars \r -Jquery",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -19,6 +19,7 @@
   "homepage": "https://github.com/MarleeG/Burger-TT#readme",
   "dependencies": {
     "express": "^4.17.1",
+    "express-handlebars": "^3.1.0",
     "mysql": "^2.18.1"
   }
 }
